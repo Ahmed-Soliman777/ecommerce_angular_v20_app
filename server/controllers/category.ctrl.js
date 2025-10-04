@@ -1,5 +1,14 @@
 const Category = require('../models/category.modle')
 
+async function handleGetCategories(req, res) {
+    const categories = await Category.find();
+    try {
+        res.status(200).json(categories)
+    } catch (error) {
+        res.status(500).json(error.message)
+    }
+}
+
 async function handleAddCategory(req, res) {
     try {
         const { name } = req.body
@@ -57,4 +66,4 @@ async function handleDeleteCategory(req, res) {
 }
 
 
-module.exports = { handleAddCategory, handleUpdateCategory, handleDeleteCategory }
+module.exports = { handleAddCategory, handleUpdateCategory, handleDeleteCategory, handleGetCategories }
