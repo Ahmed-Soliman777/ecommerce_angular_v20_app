@@ -3,6 +3,8 @@ const route = express()
 
 const Category = require('../controllers/category.ctrl')
 
+route.get('/category', Category.handleGetCategories)
+
 route.post('/category', Category.handleAddCategory)
 
 route.put('/category/:id', Category.handleUpdateCategory)
