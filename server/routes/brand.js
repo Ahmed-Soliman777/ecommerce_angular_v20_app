@@ -12,3 +12,5 @@ app.post('/brand', brandControllers.handleAddBrands)
 app.put('/brand/update/:id', brandControllers.handleUpdateBrand)
 
 app.delete('/brands/delete/:id', brandControllers.handleDeleteBrand)
+
+module.exports = route
