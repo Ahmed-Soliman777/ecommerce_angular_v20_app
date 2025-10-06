@@ -7,6 +7,7 @@ const cors = require('cors')
 
 
 const categoryRoute = require('./routes/category')
+const brandRoute = require('./routes/brand')
 
 dotenv.config();
 
@@ -15,6 +16,7 @@ app.use(cors())
 app.use(express.json())
 
 app.use('/ecommerce/api', categoryRoute)
+app.use('/ecommerce/api', brandRoute)
 
 app.get('', (req, res) => {
     res.send('Hello World!');
