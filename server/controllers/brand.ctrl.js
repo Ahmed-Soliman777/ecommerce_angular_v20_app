@@ -12,7 +12,7 @@ async function handleGetBrands(req, res) {
 async function handleAddBrands(req, res) {
     try {
         const { name } = req.body
-        const brand = await Brand.create(name)
+        const brand = await Brand.create({name})
         if (!name) {
             res.status(400).json({ message: "Brand name is requird" })
         }
