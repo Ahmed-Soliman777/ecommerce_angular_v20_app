@@ -40,10 +40,11 @@ async function handleAddProducts(req, res) {
 async function handleUpdateProducts(req, res) {
     try {
         const { id } = req.params
+        const updateData = req.body;
         if (!id) {
             res.status(400).json({ message: "Product not found" })
         }
-        const updateProduct = await products.findByIdAndUpdate(id, { new: true })
+        const updateProduct = await products.findByIdAndUpdate(id, updateData, { new: true })
         res.status(200).json(updateProduct)
     } catch (error) {
         res.status(500).json({ message: error.message })
@@ -57,7 +58,7 @@ async function handleDeleteProducts(req, res) {
             res.status(400).json({ message: "Product not found" })
         }
         const deleteProduct = await products.findByIdAndDelete(id)
-        res.status(200).json(deleteProduct)
+        res.status(200).json("product deleted successfully")
     } catch (error) {
         res.status(500).json({ message: error.message })
     }
