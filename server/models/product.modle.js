@@ -6,6 +6,7 @@ const productSchema = new mongoose.Schema({
     shortDescription: { type: String },
     purshasePrice: { type: Number, required: true },
     sellingPrice: { type: Number, required: true },
+    discount: { type: Number, required: false },
     images: { type: [String] },
     categoryId: { type: mongoose.Schema.Types.ObjectId, ref: "categories" },
 }, { timestamps: true });

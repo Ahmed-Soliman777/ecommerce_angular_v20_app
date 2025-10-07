@@ -26,11 +26,11 @@ async function handleGetProductById(req, res) {
 
 async function handleAddProducts(req, res) {
     try {
-        const { name, description, shortDescription, purshasePrice, sellingPrice, images, categoryId } = req.body
+        const { name, description, shortDescription, purshasePrice, sellingPrice, images, categoryId, discount } = req.body
         if (!name || !purshasePrice || !sellingPrice) {
             res.status(400).json({ message: "Required info missed" })
         }
-        const addProduct = await products.create({ name, description, shortDescription, purshasePrice, sellingPrice, images, categoryId })
+        const addProduct = await products.create({ name, description, shortDescription, purshasePrice, sellingPrice, images, categoryId, discount })
         res.status(200).json(addProduct)
     } catch (error) {
         res.status(500).json({ message: error.message })
