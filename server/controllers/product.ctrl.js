@@ -24,42 +24,66 @@ async function handleGetProductById(req, res) {
     }
 }
 
-async function handleAddProducts(req, res) {
-  try {
-    const {
-      name,
-      description,
-      shortDescription,
-      purshasePrice,
-      sellingPrice,
-      images,
-      categoryId,
-      discount,
-      brandId
-    } = req.body;
+async function handleGetNewProducts(req, res) {
+    try {
+        const getProducts = await products.find({ isNew: true })
+        res.status(200).json(getProducts)
 
-    if (!name || !purshasePrice || !sellingPrice) {
-      return res.status(400).json({ message: "Required info missed" });
+    } catch (error) {
+        res.status(500).json({ message: error.message })
     }
+}
 
-    const addProduct = await products.create({
-      name,
-      description,
-      shortDescription,
-      purshasePrice,
-      sellingPrice,
-      images,
-      categoryId,
-      discount,
-      brandId,
-    });
+async function handleGetFeaturedProducts(req, res) {
+    try {
+        const getProducts = await products.find({ isFeature: true })
+        res.status(200).json(getProducts)
 
-    return res.status(200).json(addProduct);
+    } catch (error) {
+        res.status(500).json({ message: error.message })
+    }
+}
 
-  } catch (error) {
-    console.error("Error adding product:", error.message);
-    return res.status(500).json({ message: error.message });
-  }
+async function handleAddProducts(req, res) {
+    try {
+        const {
+            name,
+            description,
+            shortDescription,
+            purshasePrice,
+            sellingPrice,
+            images,
+            categoryId,
+            discount,
+            brandId,
+            isNew,
+            isFeature
+        } = req.body;
+
+        if (!name || !purshasePrice || !sellingPrice) {
+            return res.status(400).json({ message: "Required info missed" });
+        }
+
+        const addProduct = await products.create({
+            name,
+            description,
+            shortDescription,
+            purshasePrice,
+            sellingPrice,
+            images,
+            categoryId,
+            discount,
+            brandId,
+            isNew,
+            isFeature
+        });
+
+        return res.status(200).json(addProduct);
+
+    } catch (error) {
+        console.error("Error adding product:", error.message);
+        return res.status(500).json({ message: error.message });
+    }
 }
 
 
@@ -90,4 +114,4 @@ async function handleDeleteProducts(req, res) {
     }
 }
 
-module.exports = { handleGetProducts, handleGetProductById, handleAddProducts, handleUpdateProducts, handleDeleteProducts }
+module.exports = { handleGetProducts, handleGetProductById, handleGetNewProducts, handleGetFeaturedProducts, handleAddProducts, handleUpdateProducts, handleDeleteProducts }
