@@ -3,7 +3,7 @@ const users = require('../models/user.modle')
 const jwt = require('jsonwebtoken')
 
 function generateToken(user) {
-    return jwt.sign({ id: user._id, username: user.username, role: user.role }, process.env.JWT_secret)
+    return jwt.sign({ id: user._id, username: user.username, isAdmin: user.isAdmin }, process.env.JWT_secret, { expiresIn: "24h" })
 }
 
 async function handleRegiterUser(req, res) {
