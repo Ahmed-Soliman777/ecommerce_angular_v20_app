@@ -9,6 +9,7 @@ const cors = require('cors')
 const categoryRoute = require('./routes/category')
 const brandRoute = require('./routes/brand')
 const productRoute = require('./routes/product')
+const userAuthRoute = require('./routes/auth')
 
 dotenv.config();
 
@@ -19,6 +20,7 @@ app.use(express.json())
 app.use('/ecommerce/api', categoryRoute)
 app.use('/ecommerce/api', brandRoute)
 app.use('/ecommerce/api', productRoute)
+app.use('/ecommerce/api', userAuthRoute)
 
 app.get('', (req, res) => {
     res.send('Hello World!');
