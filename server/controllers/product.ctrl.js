@@ -114,4 +114,44 @@ async function handleDeleteProducts(req, res) {
     }
 }
 
-module.exports = { handleGetProducts, handleGetProductById, handleGetNewProducts, handleGetFeaturedProducts, handleAddProducts, handleUpdateProducts, handleDeleteProducts }
+
+async function ProductForListing(searchTerm, categoryId, brandId, page, pageSize, sortBy, sortOrder) {
+    if (!sortBy) {
+        sortBy = 'price'
+    }
+    if (!sortOrder) {
+        sortOrder = -1
+    }
+    let queryFilter = {}
+    if (searchTerm) {
+        queryFilter.$or = [
+            {
+                name: { $regex: '.*' + searchTerm + '.*', $options: 'i' }
+            },
+            {
+                shortDescription: { $regex: '.*' + searchTerm + '.*', $options: 'i' }
+            }
+        ] // search by product name unsing like operator
+    }
+    if (categoryId) {
+        queryFilter.categoryId = categoryId
+    }
+    if (brandId) {
+        queryFilter.brandId = brandId
+    }
+    const filteredProducts = await products.find(queryFilter)
+        .sort({
+            sortBy: sortOrder
+        })
+        .skip((page - 1) * pageSize) // show n products of page
+        .limit(pageSize)
+    return filteredProducts.map((x) => x.toObject())
+}
+
+async function getProductForListing(req, res) {
+    const { searchTerm, categoryId, brandId, sortBy, sortOrder } = req.query
+    const products = await ProductForListing(searchTerm, categoryId, brandId, sortBy, sortOrder)
+    res.status(200).json(products)
+}
+
+module.exports = { handleGetProducts, handleGetProductById, handleGetNewProducts, handleGetFeaturedProducts, handleAddProducts, handleUpdateProducts, handleDeleteProducts, getProductForListing }

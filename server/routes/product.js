@@ -5,6 +5,7 @@ const productCtrl = require('../controllers/product.ctrl')
 const middleWare = require('../middleware/auth.middleware')
 
 route.get('/products', productCtrl.handleGetProducts)
+route.get('/products/list', productCtrl.getProductForListing)
 route.get('/product/:id', productCtrl.handleGetProductById)
 route.get('/products/new-product', productCtrl.handleGetNewProducts)
 route.get('/products/featured-product', productCtrl.handleGetFeaturedProducts)
