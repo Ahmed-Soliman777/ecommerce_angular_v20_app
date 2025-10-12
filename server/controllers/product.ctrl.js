@@ -114,7 +114,7 @@ async function handleDeleteProducts(req, res) {
     }
 }
 
-
+//----------------------------------------------------------------------------------------------------
 async function ProductForListing(searchTerm, categoryId, brandId, page, pageSize, sortBy, sortOrder) {
     if (!sortBy) {
         sortBy = 'price'
@@ -141,7 +141,7 @@ async function ProductForListing(searchTerm, categoryId, brandId, page, pageSize
     }
     const filteredProducts = await products.find(queryFilter)
         .sort({
-            sortBy: sortOrder
+            [sortBy]: +sortOrder
         })
         .skip((page - 1) * pageSize) // show n products of page
         .limit(pageSize)
@@ -149,9 +149,12 @@ async function ProductForListing(searchTerm, categoryId, brandId, page, pageSize
 }
 
 async function getProductForListing(req, res) {
-    const { searchTerm, categoryId, brandId, sortBy, sortOrder } = req.query
-    const products = await ProductForListing(searchTerm, categoryId, brandId, sortBy, sortOrder)
+    const { searchTerm, categoryId, brandId, page, pageSize, sortBy, sortOrder } = req.query
+    const products = await ProductForListing(searchTerm, categoryId, brandId, page, pageSize, sortBy, sortOrder)
     res.status(200).json(products)
 }
 
-module.exports = { handleGetProducts, handleGetProductById, handleGetNewProducts, handleGetFeaturedProducts, handleAddProducts, handleUpdateProducts, handleDeleteProducts, getProductForListing }
+module.exports = {
+    handleGetProducts, handleGetProductById, handleGetNewProducts, handleGetFeaturedProducts,
+    handleAddProducts, handleUpdateProducts, handleDeleteProducts, getProductForListing
+}
