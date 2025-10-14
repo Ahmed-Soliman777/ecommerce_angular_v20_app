@@ -27,7 +27,7 @@ async function handleGetCart(userId) {
 
 async function getCart(req, res) {
     try {
-        const { userId } = req.body
+        const  userId  = req.user._id
         const items = await handleGetCart(userId)
         res.status(200).json(items)
     } catch (error) {
