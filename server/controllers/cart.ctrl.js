@@ -27,7 +27,8 @@ async function handleGetCart(userId) {
 
 async function getCart(req, res) {
     try {
-        const  userId  = req.user._id
+        // console.log(req.user.id);
+        const userId = req.user.id
         const items = await handleGetCart(userId)
         res.status(200).json(items)
     } catch (error) {
@@ -39,7 +40,7 @@ async function getCart(req, res) {
 async function addCart(req, res) {
     try {
         const productId = req.params.id // product id
-        const userId = req.user._id
+        const userId = req.user.id
         const { quantity } = req.body
         const items = await handleAddToCart(userId, productId, quantity)
         res.status(200).json(items)
@@ -51,7 +52,7 @@ async function addCart(req, res) {
 async function removeCart(req, res) {
     try {
         const productId = req.params.id
-        const userId = req.user._id
+        const userId = req.user.id
         const items = await handleRemoveFromCart(userId, productId)
         res.status(200).json(items)
     } catch (error) {
