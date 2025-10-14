@@ -11,6 +11,7 @@ const brandRoute = require('./routes/brand')
 const productRoute = require('./routes/product')
 const userAuthRoute = require('./routes/auth')
 const wishlistRoute = require('./routes/wishlist')
+const cartRoute = require('./routes/cart')
 
 dotenv.config();
 
@@ -23,6 +24,7 @@ app.use('/ecommerce/api', brandRoute)
 app.use('/ecommerce/api', productRoute)
 app.use('/ecommerce/api', userAuthRoute)
 app.use('/ecommerce/api', wishlistRoute)
+app.use('/ecommerce/api', cartRoute)
 
 app.get('', (req, res) => {
     res.send('Hello World!');
