@@ -27,4 +27,14 @@ async function addOrders(req, res) {
     }
 }
 
-module.exports = { addOrders, getCustomerOrders }
+async function getOrders(req, res) {
+    try {
+        const userId = req.user.id
+        const orders = await getCustomerOrders(userId)
+        res.status(200).json(orders)
+    } catch (error) {
+        res.status(500).json({ message: error.message })
+    }
+}
+
+module.exports = { addOrders, getCustomerOrders, getOrders }
