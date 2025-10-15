@@ -6,5 +6,6 @@ const middleware = require('../middleware/auth.middleware')
 
 route.post('/order', middleware.authenticate, OrderCtrl.addOrders)
 route.get('/order', middleware.authenticate, OrderCtrl.getOrders)
+route.get('/admin/order', middleware.authenticate, middleware.isAdmin, OrderCtrl.getAllOrders)
 
 module.exports = route
