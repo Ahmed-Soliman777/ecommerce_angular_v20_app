@@ -18,6 +18,10 @@ async function handleRemoveFromCart(userId, productId) {
     await Cart.findOneAndDelete({ userId: userId, productId: productId })
 }
 
+async function handleClearCart(userId) {
+    await Cart.deleteMany({ userId: userId })
+}
+
 async function handleGetCart(userId) {
     const product = await Cart.find({ userId: userId }).populate("productId")
     return product.map((x) => {
@@ -60,4 +64,4 @@ async function removeCart(req, res) {
     }
 }
 
-module.exports = { getCart, addCart, removeCart }
+module.exports = { getCart, addCart, removeCart, handleClearCart }
