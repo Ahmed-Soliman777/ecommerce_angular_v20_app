@@ -15,7 +15,7 @@ async function getCustomerOrders(userId) {
     return orders.map((x) => x.toObject())
 }
 
-async function getAdmonOrders(userId) {
+async function getAdminOrders() {
     let orders = await Order.find()
     return orders.map((x) => x.toObject())
 }
@@ -44,11 +44,26 @@ async function getOrders(req, res) {
 
 async function getAllOrders(req, res) {
     try {
-        const orders = await getCustomerOrders()
+        const orders = await getAdminOrders()
         res.status(200).json(orders)
     } catch (error) {
         res.status(500).json({ message: error.message })
     }
 }
 
-module.exports = { addOrders, getCustomerOrders, getOrders, getAllOrders }
+async function handleUpdateOrder(id, status) {
+    await Order.findByIdAndUpdate(id, { status: status }, { new: true })
+}
+
+async function updateOrder(req, res) {
+    try {
+        const { id } = req.params
+        const { status } = req.body
+        await handleUpdateOrder(id, status)
+        res.status(200).json({ message: 'order updated' })
+    } catch (error) {
+        res.status(500).json({ message: error.message })
+    }
+}
+
+module.exports = { addOrders, getCustomerOrders, getOrders, getAllOrders, updateOrder }
