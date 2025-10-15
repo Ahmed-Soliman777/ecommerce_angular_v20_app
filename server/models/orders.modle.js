@@ -2,8 +2,10 @@ const mongoose = require("mongoose");
 
 const orderSchema = new mongoose.Schema({
     date: { type: Date, default: Date.now },
-    items: { type: [any] },
-    status: { type: Number},
+    items: Array(mongoose.Schema.Types.Mixed),
+    paymentType: { type: String },
+    address: mongoose.Schema.Types.Mixed,
+    status: { type: Number },
 }, { timestamps: true });
-const Orders = mongoose.model("orders", orderSchema);
-module.exports = Orders;
+const Order = mongoose.model("orders", orderSchema);
+module.exports = Order;
