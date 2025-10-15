@@ -5,5 +5,6 @@ const OrderCtrl = require('../controllers/order.ctrl')
 const middleware = require('../middleware/auth.middleware')
 
 route.post('/order', middleware.authenticate, OrderCtrl.addOrders)
+route.get('/order', middleware.authenticate, OrderCtrl.getOrders)
 
 module.exports = route
